@@ -5,6 +5,7 @@ import createPlugins from './vite/plugins';
 import path from 'path';
 export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
   const env = loadEnv(mode, process.cwd());
+  const apiUrl = 'http://192.168.1.3:8080';
   return {
     // 部署生产环境和开发环境下的URL。
     // 默认情况下，vite 会假设你的应用是被部署在一个域名的根路径上
@@ -25,7 +26,7 @@ export default defineConfig(({ mode, command }: ConfigEnv): UserConfig => {
       open: true,
       proxy: {
         [env.VITE_APP_BASE_API]: {
-          target: 'http://localhost:8080',
+          target: apiUrl,
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
